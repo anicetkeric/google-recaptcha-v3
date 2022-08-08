@@ -1,0 +1,15 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: recaptcha
+      auto-index-creation: true
+      username: admin
+      password: admin
+
+google:
+  recaptcha:
+    secret: 6LflWVUhAAAAAOhh5gVMhHk66MrAsJjqzUnrO04Q
+    url: https://www.google.com/recaptcha/api/siteverify
+    score-threshold: 0.7
