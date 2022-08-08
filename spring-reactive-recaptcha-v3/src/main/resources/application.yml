@@ -10,6 +10,6 @@ spring:
 
 google:
   recaptcha:
-    secret: 6LflWVUhAAAAAOhh5gVMhHk66MrAsJjqzUnrO04Q
+    secret: <<PUT_reCAPTCHA_Key>>
     url: https://www.google.com/recaptcha/api/siteverify
     score-threshold: 0.7
