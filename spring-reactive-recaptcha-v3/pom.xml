@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.rad.bootlabs</groupId>
 	<artifactId>spring-reactive-recaptcha-v3</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0-SNAPSHOT</version>
 	<name>spring-reactive-recaptcha-v3</name>
 	<description>spring-reactive-recaptcha-v3</description>
 	<properties>
