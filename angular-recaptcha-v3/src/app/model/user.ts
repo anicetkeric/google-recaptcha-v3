@@ -8,3 +8,8 @@ export class User {
     email!: string;
     captchaToken!: string;
 }
+
+export class Login {
+    username!: string;
+    password!: string;
+}

@@ -1,54 +1,39 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { User } from '../model/user';
-import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../model/api-response';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AccountService {
+  private isAuthenticated = signal<boolean>(false);
+  private readonly http = inject(HttpClient);
+  private readonly router = inject(Router); 
 
-  private userSubject: BehaviorSubject<User>;
-  public user: Observable<User>;
-
+  constructor() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.isAuthenticated.set(true);
+    }
+  }
   
+  isUserAuthenticated(): boolean {
+    return this.isAuthenticated();
+  }
 
-  constructor(
-    private router: Router,
-    private http: HttpClient
-) {
-    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')!));
-    this.user = this.userSubject.asObservable();
-}
-public get userValue(): User {
-  return this.userSubject.value;
-}
+  register(user: User, captchaToken: string): Observable<ApiResponse> {
+    user.captchaToken = captchaToken;
+    return this.http.post<ApiResponse>(`${environment.apiUrl}/register`, user);
+  }
 
-
-register(user: User, token: string) {
-  user.captchaToken = token;
-  return this.http.post<ApiResponse>(`${environment.apiUrl}/api/register`, user)
-      .pipe(map(data => {
-           var response = <ApiResponse> data; 
-          // store user details in local storage
-          localStorage.setItem('user', JSON.stringify(response.data));
-          this.userSubject.next(response.data);
-          return user;
-      }));
-}
-
-logout() {
-  // remove user from local storage and set current user to null
-  localStorage.removeItem('user');
-  this.userSubject.next(null!);
-  this.router.navigate(['']);
-}
-
+  logout(): void {
+    // remove user from local storage and set current user to null
+    localStorage.removeItem('user');
+    this.isAuthenticated.set(false);
+    this.router.navigate(['']);
+  }
 }
