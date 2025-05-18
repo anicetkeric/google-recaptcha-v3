@@ -42,8 +42,8 @@ public class UserServiceImpl implements UserService {
 
                                     String encryptedPassword = passwordEncoder.encode(dto.getPassword());
                                     newUser.setPassword(encryptedPassword);
-                                    //return userRepository.save(newUser);
-                                    return Mono.just(newUser);
+
+                                    return userRepository.save(newUser);
                                 })
                         )
                 );

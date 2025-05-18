@@ -24,11 +24,11 @@ public class CaptchaServiceImpl implements CaptchaService {
     public Mono<RecaptchaResponse> verify(String tokenResponse) {
 
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-        formData.add("secret", captchaProperties.getSecret());
+        formData.add("secret", captchaProperties.secret());
         formData.add("response", tokenResponse);
 
         return webclientBuilder.build().post()
-                .uri(captchaProperties.getUrl())
+                .uri(captchaProperties.url())
                 .bodyValue(formData)
                 .retrieve()
                 .bodyToMono(RecaptchaResponse.class)
@@ -39,8 +39,7 @@ public class CaptchaServiceImpl implements CaptchaService {
                         throw new InvalidCaptchaException("reCaptcha v3 was not successfully validated");
                     }
 
-                    if(recaptchaResponse.isSuccess() &&
-                            recaptchaResponse.getScore() < captchaProperties.getScoreThreshold()){
+                    if(recaptchaResponse.getScore() < captchaProperties.scoreThreshold()){
                         throw new InvalidCaptchaException("Low score for reCaptcha v3");
                     }
                 })

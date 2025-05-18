@@ -5,8 +5,8 @@ spring:
       port: 27017
       database: recaptcha
       auto-index-creation: true
-      username: admin
-      password: admin
+      username: <db-username>
+      password: <db-password>
 
 google:
   recaptcha:

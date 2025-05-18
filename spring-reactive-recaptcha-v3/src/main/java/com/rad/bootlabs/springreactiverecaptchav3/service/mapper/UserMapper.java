@@ -5,7 +5,6 @@ import com.rad.bootlabs.springreactiverecaptchav3.service.mapper.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Mapper for the entity {@link User} and its DTO called {@link UserDTO}.
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 public class UserMapper {
 
     public List<UserDTO> usersToUserDTOs(List<User> users) {
-        return users.stream().filter(Objects::nonNull).map(this::userToUserDTO).collect(Collectors.toList());
+        return users.stream().filter(Objects::nonNull).map(this::userToUserDTO).toList();
     }
 
     public UserDTO userToUserDTO(User user) {

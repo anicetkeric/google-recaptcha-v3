@@ -1,7 +1,6 @@
 package com.rad.bootlabs.springreactiverecaptchav3.web;
 
 import com.rad.bootlabs.springreactiverecaptchav3.common.exception.InvalidPasswordException;
-import com.rad.bootlabs.springreactiverecaptchav3.model.User;
 import com.rad.bootlabs.springreactiverecaptchav3.service.CaptchaService;
 import com.rad.bootlabs.springreactiverecaptchav3.service.UserService;
 import com.rad.bootlabs.springreactiverecaptchav3.service.mapper.dto.ApiResponseDTO;
